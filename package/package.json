@@ -1,0 +1,92 @@
+{
+  "description": "ftp-client-app",
+  "author": {
+    "email": "tranuyson@gmail.com",
+    "url": "https://github.com/Noobmaster69-bug",
+    "name": "Miles Wilson"
+  },
+  "build": {
+    "appId": "miles.ftp.0.1.0"
+  },
+  "homepage": "./",
+  "name": "ftp-client",
+  "version": "0.1.0",
+  "private": true,
+  "main": "electron/main.js",
+  "dependencies": {
+    "@emotion/react": "^11.6.0",
+    "@emotion/styled": "^11.6.0",
+    "@icetee/ftp": "^1.0.8",
+    "@material-ui/core": "latest",
+    "@mui/icons-material": "latest",
+    "@mui/material": "^5.1.0",
+    "@mui/utils": "latest",
+    "@testing-library/jest-dom": "^5.15.0",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.11.6",
+    "@types/react": "^17.0.33",
+    "@types/react-dom": "^17.0.10",
+    "ftp": "^0.3.10",
+    "husky": "^7.0.4",
+    "lint-staged": "^11.2.6",
+    "prettier": "^2.4.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-file-icon": "^1.1.0",
+    "react-router": "^6.0.1",
+    "react-router-dom": "^6.0.1",
+    "react-scripts": "4.0.3",
+    "source-map-explorer": "^2.5.2",
+    "typescript": "^4.4.4",
+    "web-vitals": "^1.1.2"
+  },
+  "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "dev": "concurrently -k \"set BROWSER=none&&npm start\" \"npm:electron\"",
+    "electron": "wait-on tcp:3000 && electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/react-file-icon": "^1.0.1",
+    "concurrently": "^6.3.0",
+    "electron": "^15.3.0",
+    "electron-builder": "^22.14.5",
+    "electron-is-dev": "^2.0.0",
+    "wait-on": "^6.0.0"
+  }
+}

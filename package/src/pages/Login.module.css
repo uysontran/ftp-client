@@ -1,0 +1,133 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input:focus {
+  outline: none;
+}
+.container {
+  display: flex;
+  align-items: center;
+  width: 1050px;
+  height: 500px;
+  -webkit-app-region: drag;
+}
+.form {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+.screen {
+  height: 500px;
+  padding-right: 20px;
+  width: 350px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  left: 350px;
+  transition: 0.75s;
+  align-items: center;
+  text-align: start;
+}
+.screen > div {
+  -webkit-app-region: no-drag;
+  margin: 10px 0 10px 0;
+}
+.screen-1 {
+  left: 0px;
+}
+.screen-2 {
+  left: -350px;
+}
+.row-holder {
+  width: 250px;
+  display: flex;
+  justify-content: space-evenly;
+}
+.row-holder > select {
+  text-align: center;
+  width: 100px;
+}
+.column-holder > input {
+  border: none;
+  border-bottom: 1px solid #b7b7b7;
+  height: 40px;
+  width: 250px;
+  transition: border 0.1s;
+}
+.column-holder > input:focus {
+  border-bottom: 1.5px solid black;
+  background: aliceblue;
+}
+.footer {
+  width: 150px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  align-self: flex-end;
+}
+.cancle-button {
+  cursor: pointer;
+  border-radius: 10px;
+  border: 1px solid black;
+  font-size: 1em;
+  -webkit-app-region: no-drag;
+  width: 70px;
+  height: 40px;
+  transition: 0.25s;
+}
+.cancle-button:hover {
+  background-color: #ed5e68;
+  color: white;
+  border: none;
+}
+.next-button {
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+  border: 1px solid black;
+  font-size: 1em;
+  -webkit-app-region: no-drag;
+  width: 70px;
+  height: 40px;
+  transition: 0.25s;
+}
+.next-button:hover {
+  background-color: #48bd64;
+  color: white;
+  border: none;
+}
+.submit-button {
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+  border: 1px solid black;
+  font-size: 1em;
+  -webkit-app-region: no-drag;
+  width: 70px;
+  height: 40px;
+  transition: 0.25s;
+}
+.submit-button:hover {
+  background-color: #48bd64;
+  color: white;
+  border: none;
+}
+.back-button {
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+  border: 1px solid black;
+  font-size: 1em;
+  -webkit-app-region: no-drag;
+  width: 70px;
+  height: 40px;
+  transition: 0.25s;
+}
+.back-button:hover {
+  background-color: #3da0f7;
+  color: white;
+  border: none;
+}
