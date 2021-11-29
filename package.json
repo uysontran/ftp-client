@@ -54,6 +54,7 @@
     "react-router-dom": "^6.0.1",
     "react-scripts": "4.0.3",
     "source-map-explorer": "^2.5.2",
+    "electron-is-dev": "^2.0.0",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -65,7 +66,7 @@
     "dev": "concurrently -k \"set BROWSER=none&&npm start\" \"npm:electron\"",
     "electron": "wait-on tcp:3000 && electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder",
+    "dist": "npm run build && electron-builder",
     "postinstall": "install-app-deps"
   },
   "husky": {
@@ -100,7 +101,7 @@
     "concurrently": "^6.3.0",
     "electron": "^15.3.0",
     "electron-builder": "^22.14.5",
-    "electron-is-dev": "^2.0.0",
+
     "wait-on": "^6.0.0"
   }
 }

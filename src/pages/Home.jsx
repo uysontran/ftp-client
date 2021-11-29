@@ -14,6 +14,7 @@ import {
 } from "./Icon";
 import "./Home.css";
 import Folder from "../pics/folder.jpg";
+import Symlink from "../pics/symlink.png"
 import BK from "../pics/bk.jpg";
 const { ipcRenderer } = window.require("electron");
 
@@ -59,7 +60,7 @@ export default function Home() {
       if (name.lastIndexOf(".") !== -1) {
         return name.slice(name.lastIndexOf(".") + 1);
       } else {
-        return "file";
+        return "folder";
       }
     } else {
       return "";
@@ -95,14 +96,16 @@ export default function Home() {
               className={
                 style["icon"] +
                 " " +
-                (getExtension(data.name) === "file"
-                  ? "file"
+                (getExtension(data.name) === "folder"
+                  ? "folder"
                   : getExtension(data.name))
               }
             >
               {data.type === "d" ? (
                 <img src={Folder} alt="Folder" />
-              ) : (
+              ) : data.type === "l" ?
+                <img src= {Symlink} alt= "Symlink"/>
+              :(
                 <FileIcon
                   extension={getExtension(data.name)}
                   {...Icon[getExtension(data.name)]}
@@ -123,7 +126,7 @@ export default function Home() {
     };
   }
   function onEnterFolder(e, row) {
-    if (fileList[row.index].type === "d") {
+    if ((fileList[row.index].type === "d")||((fileList[row.index].type === "l"))) {
       ipcRenderer.send("enter", pwd + "/" + row.file.key);
     }
   }
@@ -143,13 +146,11 @@ export default function Home() {
     }
   }
   function onUrlBar(index) {
-    ipcRenderer.send(
-      "enter",
-      pwd
-        .split("/")
-        .filter((e, i) => i <= index + 1)
-        .join("/")
-    );
+    let url = pwd
+      .split("/")
+      .filter((e, i) => i <= index)
+      .join("/");
+    ipcRenderer.send("enter", url === "" ? "/" : url);
   }
   function onUploadFile() {
     ipcRenderer.send("upload-file", pwd);
@@ -159,6 +160,7 @@ export default function Home() {
   }
   function onDrop(e) {
     var file = e.dataTransfer.files;
+    console.log(file)
     for (let i = 0; i < file.length; i++) {
       if (file[i].type === "") {
         ipcRenderer.send("drop-folder", file[i].path, pwd);
@@ -169,8 +171,6 @@ export default function Home() {
   }
   function onDownload() {
     if (select.length) {
-      console.log(select);
-      console.log({ cwd: pwd, list: select.map((e) => fileList[e.index]) });
       ipcRenderer.send("Download", {
         cwd: pwd,
         list: select.map((e) => fileList[e.index]),
@@ -244,21 +244,31 @@ export default function Home() {
           </div>
         </div>
         <div className={style["url-bar"]}>
-          {pwd
-            .split("/")
-            .filter((e) => e !== "")
-            .map((e, index) => {
+          {(pwd === "/") ?
+            [
+              <div
+                onClick={() => onUrlBar(0)}
+                key={0}
+                className={style["url-element"]}
+              >
+                /
+              </div>,
+              <CareRight key={0 + "icon"} />,
+            ]
+          :
+            pwd.split("/").map((e, index) => {
               return [
-                <CareRight key={index + "icon"} />,
                 <div
                   onClick={() => onUrlBar(index)}
                   key={index}
                   className={style["url-element"]}
                 >
-                  {e}
+                  {e === "" ? "/" : e}
                 </div>,
+                <CareRight key={index + "icon"} />,
               ];
-            })}
+            })
+          }
         </div>
         <div
           className={style["icon-bar"] + " " + style["Download"]}

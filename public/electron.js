@@ -2,8 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const ftp = require("@icetee/ftp");
 const { app, BrowserWindow, dialog, ipcMain } = require("electron");
-// const isDev = require("electron-is-dev");
-const os = require("os");
+const isDev = require("electron-is-dev");
 function mainwindow() {
   const win = new BrowserWindow({
     width: 1100,
@@ -14,8 +13,14 @@ function mainwindow() {
     },
   });
   win.removeMenu();
-  win.loadURL(`file://${path.join(__dirname, "../build/index.html")}`
+  win.loadURL(
+    isDev
+      ? "http://localhost:3000"
+      : `file://${path.join(__dirname, "../build/index.html")}`
   );
+  if (isDev){
+    win.webContents.openDevTools({mode: "detach"})
+  }
   return win;
 }
 function loginwindow(parent) {
@@ -33,7 +38,14 @@ function loginwindow(parent) {
     },
   });
   win.removeMenu();
-  win.loadURL(`file://${[__dirname, "../build/index.html#/login"].join("/")}`);
+  win.loadURL(
+    isDev
+      ? "http://localhost:3000/#/login"
+      : `file://${[__dirname, "../build/index.html#/login"].join("/")}`
+  );
+  if (isDev){
+    win.webContents.openDevTools({mode: "detach"})
+  }
   return win;
 }
 let MainWindow;
@@ -54,7 +66,11 @@ app.on("activate", () => {
   }
 });
 ipcMain.on("Missing Attribute", (event, arg) => {
-  console.log("Missing Attribute", "Please Enter All * Information");
+  dialog.showMessageBox({
+    title: "Missing Attribute",
+    message: "Please Enter All * Information",
+    type: "warning",
+  });
 });
 ipcMain.on("Cancle Connect", (event, arg) => {
   LoginWindow.close();
@@ -291,7 +307,7 @@ ipcMain.on("drop-folder", (event, dir, cwd) => {
   });
 });
 ipcMain.on("Download", (event, { cwd, list }) => {
-  let Download = path.join(os.homedir(), "Documents", "Ftp-files");
+  let Download = path.join(app.getPath("documents"), "Ftp-files");
   if (!fs.existsSync(path)) {
     fs.mkdirSync(Download, { recursive: true });
   }
